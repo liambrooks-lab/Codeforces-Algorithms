@@ -1,0 +1,12 @@
+# C++ compiled executables
+*.exe
+*.out
+*.exe~
+run
+
+# I/O files
+input.txt
+output.txt
+
+# Python cache
+__pycache__/
