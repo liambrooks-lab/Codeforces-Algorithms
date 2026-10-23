@@ -1,8 +1,7 @@
-# C++ compiled executables
+# Go and compiled binaries
 *.exe
-*.out
-*.exe~
-run
+*.test
+*.prof
 
 # I/O files
 input.txt
@@ -10,3 +9,4 @@ output.txt
 
 # Python cache
 __pycache__/
+*.py[cod]
