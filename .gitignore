@@ -1,12 +1,14 @@
-# Go and compiled binaries
+# Go, C++, and compiled binaries
 *.exe
 *.test
 *.prof
+temp_bin
+temp_bin.exe
 
 # I/O files
 input.txt
 output.txt
 
-# Python cache
+# Python cache (DevOps scripts)
 __pycache__/
 *.py[cod]

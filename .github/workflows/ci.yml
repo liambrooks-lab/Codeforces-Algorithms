@@ -8,12 +8,19 @@ on:
 
 jobs:
   test:
-    name: Codeforces Solution Verification
+    name: Codeforces Solutions Test & Verification (Go & C++)
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+
+      - name: Provision C++ Toolchain (g++)
+        run: |
+          if ! command -v g++ &> /dev/null; then
+            sudo apt-get update && sudo apt-get install -y g++ build-essential
+          fi
+          g++ --version
 
       - name: Setup Go 1.22
         uses: actions/setup-go@v5
@@ -21,7 +28,7 @@ jobs:
           go-version: '1.22'
           cache: false
 
-      - name: Setup Python 3.12
+      - name: Setup Python 3.12 (DevOps Runtime)
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -31,7 +38,7 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Run Testing Engine Gatekeeper
+      - name: Run Test Suite Gatekeeper
         run: python scripts/tester.py
 
       - name: Verify Indexing Engine

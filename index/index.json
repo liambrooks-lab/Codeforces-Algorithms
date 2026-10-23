@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-23T08:48:21.184269+00:00",
+  "generated_at": "2026-10-23T09:23:46.713780+00:00",
   "stats": {
-    "total_solved": 1,
+    "total_solved": 2,
     "by_language": {
-      "Go": 1,
-      "Python": 0
+      "Go": 2,
+      "C++": 0
     },
-    "categories_count": 1
+    "categories_count": 2
   },
   "categories": {
     "Practice_800": [
@@ -18,6 +18,16 @@
         "language": "Go",
         "file": "Practice_800/2269B_KiaKio.go",
         "has_tests": true
+      }
+    ],
+    "Practice_900": [
+      {
+        "problem_id": "2263B",
+        "title": "Min Matrices",
+        "category": "Practice_900",
+        "language": "Go",
+        "file": "Practice_900/2263B_Min_Matrices.go",
+        "has_tests": false
       }
     ]
   }

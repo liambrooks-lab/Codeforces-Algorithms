@@ -1,23 +1,31 @@
 {
-  "benchmark_timestamp": "2026-10-23T08:47:56.399324+00:00",
-  "runs_per_solution": 3,
-  "total_solutions": 1,
+  "benchmark_timestamp": "2026-10-23T09:23:46.608806+00:00",
+  "runs_per_solution": 5,
+  "total_solutions": 2,
   "results": [
     {
       "file": "Practice_800/2269B_KiaKio.go",
       "language": "Go",
       "status": "PASSED",
-      "runs": 3,
-      "avg_ms": 124.39,
-      "median_ms": 124.8,
-      "min_ms": 118.82,
-      "max_ms": 129.57,
-      "stdev_ms": 5.39,
+      "runs": 5,
+      "avg_ms": 124.33,
+      "median_ms": 121.6,
+      "min_ms": 119.98,
+      "max_ms": 129.45,
+      "stdev_ms": 4.61,
       "durations_ms": [
-        129.57,
-        118.82,
-        124.8
+        119.98,
+        129.45,
+        121.38,
+        129.22,
+        121.6
       ]
+    },
+    {
+      "file": "Practice_900/2263B_Min_Matrices.go",
+      "language": "Go",
+      "status": "SKIPPED",
+      "reason": "Missing test fixtures (input.txt or expected.txt)"
     }
   ]
 }

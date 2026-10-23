@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 scripts/tester.py - Production-Grade Competitive Programming Testing Engine
-Validates Standard I/O solutions (Go and Python 3) against local test fixtures.
+Validates Standard I/O solutions (Go and C++) against local test fixtures.
 """
 
 import os
@@ -51,7 +51,6 @@ def normalize_output(text: str) -> str:
         return ""
     lines = text.replace("\r\n", "\n").replace("\r", "\n").split("\n")
     cleaned_lines = [line.rstrip() for line in lines]
-    # Remove trailing empty lines
     while cleaned_lines and cleaned_lines[-1] == "":
         cleaned_lines.pop()
     return "\n".join(cleaned_lines)
@@ -63,21 +62,18 @@ class SolutionTest:
         self.rel_path = file_path.relative_to(repo_root)
         self.repo_root = repo_root
         self.dir_path = self.file_path.parent
-        self.language = "Go" if file_path.suffix == ".go" else "Python"
+        self.language = "Go" if file_path.suffix == ".go" else "C++"
         self.input_file = self.dir_path / "input.txt"
         self.expected_file = self.dir_path / "expected.txt"
 
     def has_test_fixtures(self) -> bool:
         return self.input_file.is_file() and self.expected_file.is_file()
 
-    def get_command(self) -> List[str]:
-        if self.language == "Go":
-            return ["go", "run", str(self.file_path)]
-        return [sys.executable, str(self.file_path)]
-
     def run(self, timeout: float = 10.0) -> Tuple[bool, str, float, Optional[str]]:
         """
         Executes the solution passing input.txt to stdin.
+        For C++: Compiles with `g++ -O3 <file> -o temp_bin`, runs `temp_bin`, and deletes `temp_bin`.
+        For Go: Runs `go run <file>`.
         Returns: (passed, actual_output, elapsed_ms, error_message)
         """
         if not self.has_test_fixtures():
@@ -95,73 +91,110 @@ class SolutionTest:
         except Exception as e:
             return False, "", 0.0, f"Cannot read expected.txt: {e}"
 
-        cmd = self.get_command()
+        temp_bin = self.repo_root / "temp_bin"
+        temp_bin_exe = self.repo_root / "temp_bin.exe"
 
-        start_time = time.perf_counter()
+        def cleanup_temp_bin():
+            for p in (temp_bin, temp_bin_exe):
+                if p.is_file():
+                    try:
+                        p.unlink()
+                    except Exception:
+                        pass
+
+        cleanup_temp_bin()
+
         try:
-            # We execute with cwd=repo_root so local input.txt inside problem dirs does not trigger file redirection macros
-            proc = subprocess.run(
-                cmd,
-                input=input_data,
-                text=True,
-                capture_output=True,
-                timeout=timeout,
-                cwd=str(self.repo_root),
+            if self.language == "C++":
+                # Compile C++ solution with -O3 optimization
+                compile_cmd = ["g++", "-O3", str(self.file_path), "-o", str(temp_bin)]
+                comp_proc = subprocess.run(
+                    compile_cmd,
+                    capture_output=True,
+                    text=True,
+                    cwd=str(self.repo_root),
+                )
+                if comp_proc.returncode != 0:
+                    return (
+                        False,
+                        "",
+                        0.0,
+                        f"C++ Compilation failed:\n{comp_proc.stderr.strip()}",
+                    )
+
+                exec_target = temp_bin_exe if temp_bin_exe.is_file() else temp_bin
+                run_cmd = [str(exec_target)]
+            else:
+                # Go execution
+                run_cmd = ["go", "run", str(self.file_path)]
+
+            start_time = time.perf_counter()
+            try:
+                proc = subprocess.run(
+                    run_cmd,
+                    input=input_data,
+                    text=True,
+                    capture_output=True,
+                    timeout=timeout,
+                    cwd=str(self.repo_root),
+                )
+                elapsed_ms = (time.perf_counter() - start_time) * 1000.0
+            except subprocess.TimeoutExpired:
+                return False, "", timeout * 1000.0, f"Execution timed out (> {timeout}s)"
+            except Exception as e:
+                return False, "", 0.0, f"Execution error: {e}"
+
+            actual_stdout = proc.stdout
+
+            # Fallback check: if stdout is empty but output.txt was produced in problem dir
+            if not actual_stdout.strip():
+                local_out = self.dir_path / "output.txt"
+                if local_out.is_file():
+                    try:
+                        with open(local_out, "r", encoding="utf-8", errors="replace") as f:
+                            file_out = f.read()
+                            if file_out.strip():
+                                actual_stdout = file_out
+                    except Exception:
+                        pass
+
+            if proc.returncode != 0:
+                err_msg = (
+                    f"Process exited with non-zero code {proc.returncode}.\n"
+                    f"STDERR:\n{proc.stderr.strip()}"
+                )
+                return False, actual_stdout, elapsed_ms, err_msg
+
+            norm_actual = normalize_output(actual_stdout)
+            norm_expected = normalize_output(expected_data)
+
+            if norm_actual == norm_expected:
+                return True, norm_actual, elapsed_ms, None
+
+            # Generate unified diff
+            diff_lines = list(
+                difflib.unified_diff(
+                    [line + "\n" for line in norm_expected.splitlines()],
+                    [line + "\n" for line in norm_actual.splitlines()],
+                    fromfile="expected.txt",
+                    tofile="actual_stdout",
+                )
             )
-            elapsed_ms = (time.perf_counter() - start_time) * 1000.0
-        except subprocess.TimeoutExpired:
-            return False, "", timeout * 1000.0, f"Execution timed out (> {timeout}s)"
-        except Exception as e:
-            return False, "", 0.0, f"Execution error: {e}"
+            diff_str = "".join(diff_lines) if diff_lines else f"Expected: {repr(norm_expected)}\nGot: {repr(norm_actual)}"
+            return False, norm_actual, elapsed_ms, f"Mismatch:\n{diff_str}"
 
-        actual_stdout = proc.stdout
-
-        # Fallback check: if stdout is empty but output.txt was produced in problem dir
-        if not actual_stdout.strip():
-            local_out = self.dir_path / "output.txt"
-            if local_out.is_file():
-                try:
-                    with open(local_out, "r", encoding="utf-8", errors="replace") as f:
-                        file_out = f.read()
-                        if file_out.strip():
-                            actual_stdout = file_out
-                except Exception:
-                    pass
-
-        if proc.returncode != 0:
-            err_msg = (
-                f"Process exited with non-zero code {proc.returncode}.\n"
-                f"STDERR:\n{proc.stderr.strip()}"
-            )
-            return False, actual_stdout, elapsed_ms, err_msg
-
-        norm_actual = normalize_output(actual_stdout)
-        norm_expected = normalize_output(expected_data)
-
-        if norm_actual == norm_expected:
-            return True, norm_actual, elapsed_ms, None
-
-        # Generate a clean unified diff for diagnosis
-        diff_lines = list(
-            difflib.unified_diff(
-                [line + "\n" for line in norm_expected.splitlines()],
-                [line + "\n" for line in norm_actual.splitlines()],
-                fromfile="expected.txt",
-                tofile="actual_stdout",
-            )
-        )
-        diff_str = "".join(diff_lines) if diff_lines else f"Expected: {repr(norm_expected)}\nGot: {repr(norm_actual)}"
-        return False, norm_actual, elapsed_ms, f"Mismatch:\n{diff_str}"
+        finally:
+            cleanup_temp_bin()
 
 
 def find_solutions(repo_root: Path) -> List[SolutionTest]:
+    """Recursively scans repository exclusively for .go and .cpp solution files."""
     solutions: List[SolutionTest] = []
     for root, dirs, files in os.walk(repo_root):
-        # Prune ignored directories
         rel_root = Path(root).relative_to(repo_root)
         parts = [p.lower() for p in rel_root.parts]
 
-        # Ignore if any part is in IGNORED_DIRS or begins with '.'
+        # Ignore ignored directories or hidden directories
         if any(p in IGNORED_DIRS or p.startswith(".") for p in parts):
             continue
 
@@ -174,11 +207,11 @@ def find_solutions(repo_root: Path) -> List[SolutionTest]:
         for file in files:
             if file.startswith("."):
                 continue
-            if file.endswith((".go", ".py")):
+            # Exclusively scan for .go and .cpp files (ignore .py outside scripts)
+            if file.endswith((".go", ".cpp")):
                 file_path = Path(root) / file
                 solutions.append(SolutionTest(file_path, repo_root))
 
-    # Sort solutions by path for deterministic execution order
     solutions.sort(key=lambda s: str(s.rel_path))
     return solutions
 
@@ -187,14 +220,14 @@ def main() -> int:
     repo_root = Path(__file__).resolve().parent.parent
 
     print(f"\n{COLOR_BOLD}{COLOR_CYAN}===================================================={COLOR_RESET}")
-    print(f"{COLOR_BOLD}{COLOR_CYAN}  Codeforces Standard I/O Test Runner               {COLOR_RESET}")
+    print(f"{COLOR_BOLD}{COLOR_CYAN}  Codeforces Standard I/O Test Runner (Go & C++)    {COLOR_RESET}")
     print(f"{COLOR_BOLD}{COLOR_CYAN}===================================================={COLOR_RESET}")
     print(f"Repository Root: {COLOR_DIM}{repo_root}{COLOR_RESET}\n")
 
     solutions = find_solutions(repo_root)
 
     if not solutions:
-        print(f"{COLOR_YELLOW}No solution files (.go / .py) discovered.{COLOR_RESET}")
+        print(f"{COLOR_YELLOW}No solution files (.go / .cpp) discovered.{COLOR_RESET}")
         return 0
 
     passed_count = 0
@@ -204,7 +237,8 @@ def main() -> int:
     print(f"{COLOR_BOLD}Discovered {len(solutions)} solution(s):{COLOR_RESET}\n")
 
     for sol in solutions:
-        lang_badge = f"{COLOR_MAGENTA}[{sol.language}]{COLOR_RESET}"
+        lang_color = COLOR_MAGENTA if sol.language == "Go" else COLOR_BLUE
+        lang_badge = f"{lang_color}[{sol.language}]{COLOR_RESET}"
         target_display = f"{lang_badge} {COLOR_BOLD}{sol.rel_path}{COLOR_RESET}"
 
         if not sol.has_test_fixtures():
