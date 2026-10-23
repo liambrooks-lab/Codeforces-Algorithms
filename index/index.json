@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-10-23T08:48:21.184269+00:00",
+  "stats": {
+    "total_solved": 1,
+    "by_language": {
+      "Go": 1,
+      "Python": 0
+    },
+    "categories_count": 1
+  },
+  "categories": {
+    "Practice_800": [
+      {
+        "problem_id": "2269B",
+        "title": "KiaKio",
+        "category": "Practice_800",
+        "language": "Go",
+        "file": "Practice_800/2269B_KiaKio.go",
+        "has_tests": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,2 @@
+# Base dependencies for automation scripts
+# Scripts use Python 3.12 standard library for zero-dependency execution.
