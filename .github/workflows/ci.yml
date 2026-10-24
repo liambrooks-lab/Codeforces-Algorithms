@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: write
+
 jobs:
   test:
     name: Codeforces Solutions Test & Verification (Go & C++)
@@ -39,7 +42,20 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Run Test Suite Gatekeeper
-        run: python scripts/tester.py
+        run: make test
 
-      - name: Verify Indexing Engine
-        run: python scripts/indexer.py
+      - name: Run Benchmark Engine
+        run: make benchmark
+
+      - name: Run Indexing Engine
+        run: make index
+
+      - name: Secure Auto-Commit Updated Benchmarks and Index
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(automation): update benchmark results and problem index [skip ci]"
+          file_pattern: "benchmarks/results.json index/index.json"
+          commit_user_name: "github-actions[bot]"
+          commit_user_email: "41898282+github-actions[bot]@users.noreply.github.com"
+          commit_author: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
