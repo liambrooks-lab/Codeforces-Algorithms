@@ -58,7 +58,23 @@ def parse_solution(file_path: Path, repo_root: Path) -> Dict[str, Any]:
 
     language = "Go" if ext == "go" else "C++"
     dir_path = file_path.parent
-    has_tests = (dir_path / "input.txt").is_file() and (dir_path / "expected.txt").is_file()
+    stem = file_path.stem
+
+    # Check problem-specific fixtures first, then directory-level
+    has_tests = (
+        ((dir_path / f"{stem}_input.txt").is_file() and (dir_path / f"{stem}_expected.txt").is_file())
+        or ((dir_path / f"{problem_id}_input.txt").is_file() and (dir_path / f"{problem_id}_expected.txt").is_file())
+    )
+    if not has_tests:
+        dir_in = dir_path / "input.txt"
+        dir_exp = dir_path / "expected.txt"
+        if dir_in.is_file() and dir_exp.is_file():
+            solutions_in_dir = sorted(
+                [f for f in dir_path.iterdir() if f.is_file() and f.suffix in (".go", ".cpp") and not f.name.startswith(".")],
+                key=lambda p: p.name,
+            )
+            if len(solutions_in_dir) <= 1 or (solutions_in_dir and solutions_in_dir[0] == file_path):
+                has_tests = True
 
     return {
         "problem_id": problem_id,

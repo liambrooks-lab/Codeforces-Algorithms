@@ -1,4 +1,4 @@
-.PHONY: all test benchmark index clean
+.PHONY: all test benchmark index clean push
 
 PYTHON ?= python
 
@@ -15,3 +15,10 @@ index:
 
 clean:
 	$(PYTHON) scripts/cleaner.py
+
+push:
+	git add .
+	git commit -m "$(msg)"
+	git pull --rebase origin main
+	make test
+	git push

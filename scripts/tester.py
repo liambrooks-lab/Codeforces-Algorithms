@@ -63,11 +63,51 @@ class SolutionTest:
         self.repo_root = repo_root
         self.dir_path = self.file_path.parent
         self.language = "Go" if file_path.suffix == ".go" else "C++"
-        self.input_file = self.dir_path / "input.txt"
-        self.expected_file = self.dir_path / "expected.txt"
+        self.stem = file_path.stem
+        self.problem_id = self.stem.split("_")[0] if "_" in self.stem else self.stem
+
+        self.input_file, self.expected_file = self._resolve_fixtures()
+
+    def _resolve_fixtures(self) -> Tuple[Optional[Path], Optional[Path]]:
+        """Resolves test fixtures using problem-specific naming or directory-level fallback."""
+        # 1. Exact stem: e.g., 2269B_KiaKio_input.txt & 2269B_KiaKio_expected.txt
+        stem_in = self.dir_path / f"{self.stem}_input.txt"
+        stem_exp = self.dir_path / f"{self.stem}_expected.txt"
+        if stem_in.is_file() and stem_exp.is_file():
+            return stem_in, stem_exp
+
+        # 2. Problem ID prefix: e.g., 2269B_input.txt & 2269B_expected.txt
+        id_in = self.dir_path / f"{self.problem_id}_input.txt"
+        id_exp = self.dir_path / f"{self.problem_id}_expected.txt"
+        if id_in.is_file() and id_exp.is_file():
+            return id_in, id_exp
+
+        # 3. Directory-level fallback: input.txt & expected.txt
+        dir_in = self.dir_path / "input.txt"
+        dir_exp = self.dir_path / "expected.txt"
+        if dir_in.is_file() and dir_exp.is_file():
+            solutions_in_dir = [
+                f for f in self.dir_path.iterdir()
+                if f.is_file() and f.suffix in (".go", ".cpp") and not f.name.startswith(".")
+            ]
+            if len(solutions_in_dir) <= 1:
+                return dir_in, dir_exp
+
+            # For backward compatibility when multiple solutions exist in the folder,
+            # assign generic input.txt to the first alphabetical solution
+            solutions_in_dir.sort(key=lambda p: p.name)
+            if solutions_in_dir and solutions_in_dir[0] == self.file_path:
+                return dir_in, dir_exp
+
+        return None, None
 
     def has_test_fixtures(self) -> bool:
-        return self.input_file.is_file() and self.expected_file.is_file()
+        return (
+            self.input_file is not None
+            and self.expected_file is not None
+            and self.input_file.is_file()
+            and self.expected_file.is_file()
+        )
 
     def run(self, timeout: float = 10.0) -> Tuple[bool, str, float, Optional[str]]:
         """
@@ -83,13 +123,13 @@ class SolutionTest:
             with open(self.input_file, "r", encoding="utf-8", errors="replace") as f:
                 input_data = f.read()
         except Exception as e:
-            return False, "", 0.0, f"Cannot read input.txt: {e}"
+            return False, "", 0.0, f"Cannot read input file: {e}"
 
         try:
             with open(self.expected_file, "r", encoding="utf-8", errors="replace") as f:
                 expected_data = f.read()
         except Exception as e:
-            return False, "", 0.0, f"Cannot read expected.txt: {e}"
+            return False, "", 0.0, f"Cannot read expected file: {e}"
 
         temp_bin = self.repo_root / "temp_bin"
         temp_bin_exe = self.repo_root / "temp_bin.exe"
@@ -106,7 +146,6 @@ class SolutionTest:
 
         try:
             if self.language == "C++":
-                # Compile C++ solution with -O3 optimization
                 compile_cmd = ["g++", "-O3", str(self.file_path), "-o", str(temp_bin)]
                 comp_proc = subprocess.run(
                     compile_cmd,
@@ -125,7 +164,6 @@ class SolutionTest:
                 exec_target = temp_bin_exe if temp_bin_exe.is_file() else temp_bin
                 run_cmd = [str(exec_target)]
             else:
-                # Go execution
                 run_cmd = ["go", "run", str(self.file_path)]
 
             start_time = time.perf_counter()
@@ -194,7 +232,6 @@ def find_solutions(repo_root: Path) -> List[SolutionTest]:
         rel_root = Path(root).relative_to(repo_root)
         parts = [p.lower() for p in rel_root.parts]
 
-        # Ignore ignored directories or hidden directories
         if any(p in IGNORED_DIRS or p.startswith(".") for p in parts):
             continue
 
@@ -207,7 +244,6 @@ def find_solutions(repo_root: Path) -> List[SolutionTest]:
         for file in files:
             if file.startswith("."):
                 continue
-            # Exclusively scan for .go and .cpp files (ignore .py outside scripts)
             if file.endswith((".go", ".cpp")):
                 file_path = Path(root) / file
                 solutions.append(SolutionTest(file_path, repo_root))
