@@ -1,6 +1,10 @@
 {
   "schema_version": "1.0",
+<<<<<<< HEAD
   "generated_at": "2026-10-24T06:14:36.654381+00:00",
+=======
+  "generated_at": "2026-10-24T06:21:41.145372+00:00",
+>>>>>>> cc20bfdb99689a935a85af05552f4edc14885638
   "stats": {
     "total_solved": 3,
     "by_language": {
@@ -17,7 +21,11 @@
         "category": "Practice_800",
         "language": "Go",
         "file": "Practice_800/2269B_KiaKio.go",
+<<<<<<< HEAD
         "has_tests": true
+=======
+        "has_tests": false
+>>>>>>> cc20bfdb99689a935a85af05552f4edc14885638
       },
       {
         "problem_id": "2275B",
