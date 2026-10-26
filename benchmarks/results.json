@@ -1,7 +1,7 @@
 {
-  "benchmark_timestamp": "2026-10-25T06:54:11.680467+00:00",
+  "benchmark_timestamp": "2026-10-26T11:35:00.496223+00:00",
   "runs_per_solution": 5,
-  "total_solutions": 4,
+  "total_solutions": 5,
   "results": [
     {
       "file": "problem_set_800/2269B_KiaKio.go",
@@ -17,6 +17,12 @@
     },
     {
       "file": "problem_set_800/2275B_did_not_go_to_print.go",
+      "language": "Go",
+      "status": "SKIPPED",
+      "reason": "Missing test fixtures (input.txt or expected.txt)"
+    },
+    {
+      "file": "problem_set_900/2260B_monocarp_and_projects.go",
       "language": "Go",
       "status": "SKIPPED",
       "reason": "Missing test fixtures (input.txt or expected.txt)"

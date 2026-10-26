@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-25T06:54:11.736543+00:00",
+  "generated_at": "2026-10-26T11:35:00.556868+00:00",
   "stats": {
-    "total_solved": 4,
+    "total_solved": 5,
     "by_language": {
-      "Go": 4,
+      "Go": 5,
       "C++": 0
     },
     "categories_count": 2
@@ -37,6 +37,14 @@
       }
     ],
     "problem_set_900": [
+      {
+        "problem_id": "2260B",
+        "title": "monocarp and projects",
+        "category": "problem_set_900",
+        "language": "Go",
+        "file": "problem_set_900/2260B_monocarp_and_projects.go",
+        "has_tests": false
+      },
       {
         "problem_id": "2263B",
         "title": "Min Matrices",
