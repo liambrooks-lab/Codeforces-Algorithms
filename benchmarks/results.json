@@ -4,25 +4,25 @@
   "total_solutions": 4,
   "results": [
     {
-      "file": "Practice_800/2269B_KiaKio.go",
+      "file": "problem_set_800/2269B_KiaKio.go",
       "language": "Go",
       "status": "SKIPPED",
       "reason": "Missing test fixtures (input.txt or expected.txt)"
     },
     {
-      "file": "Practice_800/2275A_in_search_of_convenience.go",
+      "file": "problem_set_800/2275A_in_search_of_convenience.go",
       "language": "Go",
       "status": "SKIPPED",
       "reason": "Missing test fixtures (input.txt or expected.txt)"
     },
     {
-      "file": "Practice_800/2275B_did_not_go_to_print.go",
+      "file": "problem_set_800/2275B_did_not_go_to_print.go",
       "language": "Go",
       "status": "SKIPPED",
       "reason": "Missing test fixtures (input.txt or expected.txt)"
     },
     {
-      "file": "Practice_900/2263B_Min_Matrices.go",
+      "file": "problem_set_900/2263B_Min_Matrices.go",
       "language": "Go",
       "status": "SKIPPED",
       "reason": "Missing test fixtures (input.txt or expected.txt)"

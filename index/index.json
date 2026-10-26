@@ -10,39 +10,39 @@
     "categories_count": 2
   },
   "categories": {
-    "Practice_800": [
+    "problem_set_800": [
       {
         "problem_id": "2269B",
         "title": "KiaKio",
-        "category": "Practice_800",
+        "category": "problem_set_800",
         "language": "Go",
-        "file": "Practice_800/2269B_KiaKio.go",
+        "file": "problem_set_800/2269B_KiaKio.go",
         "has_tests": false
       },
       {
         "problem_id": "2275A",
         "title": "in search of convenience",
-        "category": "Practice_800",
+        "category": "problem_set_800",
         "language": "Go",
-        "file": "Practice_800/2275A_in_search_of_convenience.go",
+        "file": "problem_set_800/2275A_in_search_of_convenience.go",
         "has_tests": false
       },
       {
         "problem_id": "2275B",
         "title": "did not go to print",
-        "category": "Practice_800",
+        "category": "problem_set_800",
         "language": "Go",
-        "file": "Practice_800/2275B_did_not_go_to_print.go",
+        "file": "problem_set_800/2275B_did_not_go_to_print.go",
         "has_tests": false
       }
     ],
-    "Practice_900": [
+    "problem_set_900": [
       {
         "problem_id": "2263B",
         "title": "Min Matrices",
-        "category": "Practice_900",
+        "category": "problem_set_900",
         "language": "Go",
-        "file": "Practice_900/2263B_Min_Matrices.go",
+        "file": "problem_set_900/2263B_Min_Matrices.go",
         "has_tests": false
       }
     ]

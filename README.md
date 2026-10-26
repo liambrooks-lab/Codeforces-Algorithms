@@ -22,7 +22,7 @@ The directory architecture is designed for scalability and automated testing:
 
 ```text
 Codeforces-Algorithms/
-├── Practice_<Rating>/  # Rating-specific directories (e.g., Practice_800, Practice_1500)
+├── problem_set_<Rating>/  # Rating-specific directories (e.g., problem_set_800, problem_set_1500)
 ├── Virtual_Contests/   # Solutions from simulated contest environments
 ├── Templates/          # Standardized fast I/O boilerplate for Go and C++
 ├── scripts/            # CI/CD automation, testing, benchmarking, and indexing

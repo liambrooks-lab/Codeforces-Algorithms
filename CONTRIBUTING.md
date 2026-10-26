@@ -23,7 +23,7 @@ This document outlines the strict operational standards for managing the `Codefo
 
 * Problem files must follow the format: `<ProblemID>_<ShortName>.<ext>`
   * *Example:* `2269B_KiaKio.go` or `2269B_KiaKio.cpp`
-* Files must be placed in their exact rating directory (e.g., `Practice_800/`, `Practice_1200/`).
+* Files must be placed in their exact rating directory (e.g., `problem_set_800/`, `problem_set_1200/`).
 
 ## 5. Commit Guidelines
 
