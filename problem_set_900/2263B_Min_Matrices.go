@@ -1,3 +1,12 @@
+/*
+{
+    "problem_name": "Min Matrices",
+    "category": "problem_set_900",
+    "time_complexity": "O(n^2)",
+    "space_complexity": "O(1)"
+}
+*/
+
 package main
 
 import (

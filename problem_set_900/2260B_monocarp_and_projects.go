@@ -1,3 +1,12 @@
+/*
+{
+    "problem_name": "Monocarp and Projects",
+    "category": "problem_set_900",
+    "time_complexity": "O(min(k, y - x))",
+    "space_complexity": "O(1)"
+}
+*/
+
 package main
 
 import (

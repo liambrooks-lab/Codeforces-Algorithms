@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 scripts/cleaner.py - Repository Artifact Cleaning Engine
-Recursively cleans stray .exe, .out, temp_bin, temp_bin.exe, and __pycache__ artifacts.
+Recursively cleans stray .exe, .out, temp_bin, temp_bin.exe, temp_go_bin.exe, and __pycache__ artifacts.
 """
 
 import os
@@ -27,6 +27,8 @@ def clean_repo(repo_root: pathlib.Path) -> int:
         "**/*.out",
         "**/temp_bin",
         "**/temp_bin.exe",
+        "**/temp_go_bin.exe",
+        "**/temp_go_bin",
     ]
 
     removed_files = 0

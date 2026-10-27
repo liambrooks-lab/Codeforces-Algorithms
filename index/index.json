@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-26T11:35:00.556868+00:00",
+  "generated_at": "2026-10-27T06:12:33.522272+00:00",
   "stats": {
-    "total_solved": 5,
+    "total_solved": 6,
     "by_language": {
-      "Go": 5,
+      "Go": 6,
       "C++": 0
     },
     "categories_count": 2
@@ -12,25 +12,45 @@
   "categories": {
     "problem_set_800": [
       {
+        "problem_id": "2261A",
+        "problem_name": "Hey It's Me Souvlakity",
+        "title": "Hey It's Me Souvlakity",
+        "category": "problem_set_800",
+        "time_complexity": "O(n)",
+        "space_complexity": "O(1)",
+        "language": "Go",
+        "file": "problem_set_800/2261A_Souvlakity.go",
+        "has_tests": false
+      },
+      {
         "problem_id": "2269B",
+        "problem_name": "KiaKio",
         "title": "KiaKio",
         "category": "problem_set_800",
+        "time_complexity": "O(n)",
+        "space_complexity": "O(n)",
         "language": "Go",
         "file": "problem_set_800/2269B_KiaKio.go",
         "has_tests": false
       },
       {
         "problem_id": "2275A",
-        "title": "in search of convenience",
+        "problem_name": "In Search of Convenience",
+        "title": "In Search of Convenience",
         "category": "problem_set_800",
+        "time_complexity": "O(1)",
+        "space_complexity": "O(1)",
         "language": "Go",
         "file": "problem_set_800/2275A_in_search_of_convenience.go",
         "has_tests": false
       },
       {
         "problem_id": "2275B",
-        "title": "did not go to print",
+        "problem_name": "Did Not Go to Print",
+        "title": "Did Not Go to Print",
         "category": "problem_set_800",
+        "time_complexity": "O(n)",
+        "space_complexity": "O(n)",
         "language": "Go",
         "file": "problem_set_800/2275B_did_not_go_to_print.go",
         "has_tests": false
@@ -39,16 +59,22 @@
     "problem_set_900": [
       {
         "problem_id": "2260B",
-        "title": "monocarp and projects",
+        "problem_name": "Monocarp and Projects",
+        "title": "Monocarp and Projects",
         "category": "problem_set_900",
+        "time_complexity": "O(min(k, y - x))",
+        "space_complexity": "O(1)",
         "language": "Go",
         "file": "problem_set_900/2260B_monocarp_and_projects.go",
         "has_tests": false
       },
       {
         "problem_id": "2263B",
+        "problem_name": "Min Matrices",
         "title": "Min Matrices",
         "category": "problem_set_900",
+        "time_complexity": "O(n^2)",
+        "space_complexity": "O(1)",
         "language": "Go",
         "file": "problem_set_900/2263B_Min_Matrices.go",
         "has_tests": false

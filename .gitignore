@@ -4,6 +4,8 @@
 *.prof
 temp_bin
 temp_bin.exe
+temp_go_bin.exe
+temp_go_bin
 
 # I/O files
 input.txt

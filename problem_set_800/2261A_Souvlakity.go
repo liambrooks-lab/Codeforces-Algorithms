@@ -1,3 +1,12 @@
+/*
+{
+    "problem_name": "Hey It's Me Souvlakity",
+    "category": "problem_set_800",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)"
+}
+*/
+
 package main
 
 import (

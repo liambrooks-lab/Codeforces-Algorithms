@@ -1,3 +1,12 @@
+/*
+{
+    "problem_name": "In Search of Convenience",
+    "category": "problem_set_800",
+    "time_complexity": "O(1)",
+    "space_complexity": "O(1)"
+}
+*/
+
 package main
 
 import (

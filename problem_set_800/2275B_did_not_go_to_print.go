@@ -1,3 +1,12 @@
+/*
+{
+    "problem_name": "Did Not Go to Print",
+    "category": "problem_set_800",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)"
+}
+*/
+
 package main
 
 import (

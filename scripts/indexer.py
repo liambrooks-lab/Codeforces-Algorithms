@@ -2,6 +2,7 @@
 """
 scripts/indexer.py - Automated Competitive Programming Catalog & Indexing Engine
 Scans problem directories for Go and C++ solutions and generates index/index.json.
+Parses top JSON metadata comment blocks for problem details and complexity.
 """
 
 import datetime
@@ -38,10 +39,55 @@ IGNORED_TOP_DIRS = {
 }
 
 
+def extract_metadata(file_path: Path) -> Dict[str, str]:
+    """
+    Parses a multi-line comment at the very top of .go and .cpp files
+    containing a JSON block formatted as:
+    /*
+    {
+        "problem_name": "...",
+        "category": "...",
+        "time_complexity": "...",
+        "space_complexity": "..."
+    }
+    */
+    Gracefully falls back to default/empty values without crashing.
+    """
+    defaults = {
+        "problem_name": "",
+        "category": "",
+        "time_complexity": "",
+        "space_complexity": "",
+    }
+    if not file_path.is_file():
+        return defaults
+
+    try:
+        with open(file_path, "r", encoding="utf-8", errors="replace") as f:
+            content = f.read(4096)
+
+        # Match JSON block wrapped in /* and */ at the top of the file
+        match = re.search(r"/\*\s*(\{.*?\})\s*\*/", content, re.DOTALL)
+        if match:
+            json_text = match.group(1).strip()
+            data = json.loads(json_text)
+            if isinstance(data, dict):
+                return {
+                    "problem_name": str(data.get("problem_name", "")),
+                    "category": str(data.get("category", "")),
+                    "time_complexity": str(data.get("time_complexity", "")),
+                    "space_complexity": str(data.get("space_complexity", "")),
+                }
+    except Exception:
+        pass
+
+    return defaults
+
+
 def parse_solution(file_path: Path, repo_root: Path) -> Dict[str, Any]:
-    """Extracts problem metadata from filename and directory structure for Go and C++."""
+    """Extracts problem metadata from filename, directory structure, and top JSON header."""
     rel_path = file_path.relative_to(repo_root)
-    category = rel_path.parts[0] if len(rel_path.parts) > 1 else "Root"
+    dir_category = rel_path.parts[0] if len(rel_path.parts) > 1 else "Root"
     filename = file_path.name
 
     match = FILENAME_REGEX.match(filename)
@@ -76,10 +122,20 @@ def parse_solution(file_path: Path, repo_root: Path) -> Dict[str, Any]:
             if len(solutions_in_dir) <= 1 or (solutions_in_dir and solutions_in_dir[0] == file_path):
                 has_tests = True
 
+    # Parse metadata from top JSON comment block
+    meta = extract_metadata(file_path)
+    problem_name = meta["problem_name"] if meta["problem_name"] else problem_title
+    category = meta["category"] if meta["category"] else dir_category
+    time_complexity = meta["time_complexity"]
+    space_complexity = meta["space_complexity"]
+
     return {
         "problem_id": problem_id,
-        "title": problem_title,
+        "problem_name": problem_name,
+        "title": problem_name,
         "category": category,
+        "time_complexity": time_complexity,
+        "space_complexity": space_complexity,
         "language": language,
         "file": str(rel_path).replace("\\", "/"),
         "has_tests": has_tests,
@@ -117,7 +173,7 @@ def scan_and_index(repo_root: Path) -> Dict[str, Any]:
                     total_problems += 1
 
         if category_problems:
-            category_problems.sort(key=lambda x: (x["problem_id"], x["title"]))
+            category_problems.sort(key=lambda x: (x["problem_id"], x["problem_name"]))
             index_by_category[folder_name] = category_problems
 
     payload = {
@@ -162,7 +218,8 @@ def main() -> int:
         print(f"  [{cat}] ({len(items)} problems)")
         for item in items:
             tests_badge = f"{COLOR_GREEN}[TESTS: YES]{COLOR_RESET}" if item["has_tests"] else f"{COLOR_DIM}[TESTS: NO]{COLOR_RESET}"
-            print(f"    - {COLOR_BOLD}{item['problem_id']}{COLOR_RESET}: {item['title']} ({item['language']}) {tests_badge}")
+            complexity_str = f" [{item['time_complexity']} / {item['space_complexity']}]" if item['time_complexity'] or item['space_complexity'] else ""
+            print(f"    - {COLOR_BOLD}{item['problem_id']}{COLOR_RESET}: {item['problem_name']} ({item['language']}){complexity_str} {tests_badge}")
 
     print(f"\n{COLOR_BOLD}{COLOR_GREEN}Index written successfully to:{COLOR_RESET} {index_file}\n")
     return 0

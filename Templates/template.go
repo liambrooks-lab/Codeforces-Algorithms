@@ -1,3 +1,12 @@
+/*
+{
+    "problem_name": "...",
+    "category": "...",
+    "time_complexity": "...",
+    "space_complexity": "..."
+}
+*/
+
 package main
 
 import (

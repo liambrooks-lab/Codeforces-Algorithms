@@ -27,6 +27,9 @@ COLOR_CYAN = "\033[96m"
 COLOR_BLUE = "\033[94m"
 COLOR_MAGENTA = "\033[95m"
 
+# Subprocess timeout threshold to prevent antivirus overhead timeouts on Windows
+DEFAULT_TIMEOUT = 25.0
+
 PASS_BADGE = f"{COLOR_BOLD}{COLOR_GREEN}[ PASS ]{COLOR_RESET}"
 FAIL_BADGE = f"{COLOR_BOLD}{COLOR_RED}[ FAIL ]{COLOR_RESET}"
 SKIP_BADGE = f"{COLOR_BOLD}{COLOR_YELLOW}[ SKIP ]{COLOR_RESET}"
@@ -109,50 +112,60 @@ class SolutionTest:
             and self.expected_file.is_file()
         )
 
-    def run(self, timeout: float = 10.0) -> Tuple[bool, str, float, Optional[str]]:
+    def run(self, timeout: float = DEFAULT_TIMEOUT) -> Tuple[bool, str, float, Optional[str]]:
         """
         Executes the solution passing input.txt to stdin.
         For C++: Compiles with `g++ -O3 <file> -o temp_bin`, runs `temp_bin`, and deletes `temp_bin`.
-        For Go: Runs `go run <file>`.
+        For Go: Compiles with `go build -o temp_go_bin.exe <file>`, runs `temp_go_bin.exe`, and strictly deletes `temp_go_bin.exe`.
         Returns: (passed, actual_output, elapsed_ms, error_message)
         """
         if not self.has_test_fixtures():
             return False, "", 0.0, "Missing input.txt or expected.txt"
 
         try:
-            with open(self.input_file, "r", encoding="utf-8", errors="replace") as f:
+            with open(self.input_file, "r", encoding="utf-8-sig", errors="replace") as f:
                 input_data = f.read()
         except Exception as e:
             return False, "", 0.0, f"Cannot read input file: {e}"
 
         try:
-            with open(self.expected_file, "r", encoding="utf-8", errors="replace") as f:
+            with open(self.expected_file, "r", encoding="utf-8-sig", errors="replace") as f:
                 expected_data = f.read()
         except Exception as e:
             return False, "", 0.0, f"Cannot read expected file: {e}"
 
         temp_bin = self.repo_root / "temp_bin"
         temp_bin_exe = self.repo_root / "temp_bin.exe"
+        temp_go_bin = self.repo_root / "temp_go_bin.exe"
 
         def cleanup_temp_bin():
-            for p in (temp_bin, temp_bin_exe):
+            for p in (temp_bin, temp_bin_exe, temp_go_bin):
                 if p.is_file():
-                    try:
-                        p.unlink()
-                    except Exception:
-                        pass
+                    for _ in range(5):
+                        try:
+                            p.unlink()
+                            break
+                        except Exception:
+                            time.sleep(0.05)
 
         cleanup_temp_bin()
 
         try:
             if self.language == "C++":
                 compile_cmd = ["g++", "-O3", str(self.file_path), "-o", str(temp_bin)]
-                comp_proc = subprocess.run(
-                    compile_cmd,
-                    capture_output=True,
-                    text=True,
-                    cwd=str(self.repo_root),
-                )
+                try:
+                    comp_proc = subprocess.run(
+                        compile_cmd,
+                        capture_output=True,
+                        text=True,
+                        encoding="utf-8",
+                        errors="replace",
+                        cwd=str(self.repo_root),
+                        timeout=timeout,
+                    )
+                except subprocess.TimeoutExpired:
+                    return False, "", timeout * 1000.0, f"C++ Compilation timed out (> {timeout}s)"
+
                 if comp_proc.returncode != 0:
                     return (
                         False,
@@ -164,7 +177,29 @@ class SolutionTest:
                 exec_target = temp_bin_exe if temp_bin_exe.is_file() else temp_bin
                 run_cmd = [str(exec_target)]
             else:
-                run_cmd = ["go", "run", str(self.file_path)]
+                compile_cmd = ["go", "build", "-o", str(temp_go_bin), str(self.file_path)]
+                try:
+                    comp_proc = subprocess.run(
+                        compile_cmd,
+                        capture_output=True,
+                        text=True,
+                        encoding="utf-8",
+                        errors="replace",
+                        cwd=str(self.repo_root),
+                        timeout=timeout,
+                    )
+                except subprocess.TimeoutExpired:
+                    return False, "", timeout * 1000.0, f"Go Compilation timed out (> {timeout}s)"
+
+                if comp_proc.returncode != 0:
+                    return (
+                        False,
+                        "",
+                        0.0,
+                        f"Go Compilation failed:\n{comp_proc.stderr.strip()}",
+                    )
+
+                run_cmd = [str(temp_go_bin)]
 
             start_time = time.perf_counter()
             try:
@@ -172,6 +207,8 @@ class SolutionTest:
                     run_cmd,
                     input=input_data,
                     text=True,
+                    encoding="utf-8",
+                    errors="replace",
                     capture_output=True,
                     timeout=timeout,
                     cwd=str(self.repo_root),
@@ -189,7 +226,7 @@ class SolutionTest:
                 local_out = self.dir_path / "output.txt"
                 if local_out.is_file():
                     try:
-                        with open(local_out, "r", encoding="utf-8", errors="replace") as f:
+                        with open(local_out, "r", encoding="utf-8-sig", errors="replace") as f:
                             file_out = f.read()
                             if file_out.strip():
                                 actual_stdout = file_out
@@ -283,7 +320,7 @@ def main() -> int:
             print(f"         {COLOR_DIM}No test fixtures found (requires input.txt and expected.txt){COLOR_RESET}")
             continue
 
-        passed, actual, elapsed, error = sol.run()
+        passed, actual, elapsed, error = sol.run(timeout=DEFAULT_TIMEOUT)
 
         if passed:
             passed_count += 1
