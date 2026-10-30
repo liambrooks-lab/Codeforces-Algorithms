@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-29T13:48:50.837632+00:00",
+  "generated_at": "2026-10-30T05:17:18.643818+00:00",
   "stats": {
-    "total_solved": 8,
+    "total_solved": 9,
     "by_language": {
-      "Go": 8,
+      "Go": 9,
       "C++": 0
     },
     "categories_count": 2
@@ -99,6 +99,17 @@
         "space_complexity": "O(1)",
         "language": "Go",
         "file": "problem_set_900/2263B_Min_Matrices.go",
+        "has_tests": false
+      },
+      {
+        "problem_id": "2276B",
+        "problem_name": "Replace and Compress",
+        "title": "Replace and Compress",
+        "category": "Strings / Observations",
+        "time_complexity": "O(N) -> Single pass string scan. Zero actual compression simulations.",
+        "space_complexity": "O(N) -> To store the string in memory, optimal for 3*10^5 constraints.",
+        "language": "Go",
+        "file": "problem_set_900/2276B_Replace_and_Compress.go",
         "has_tests": false
       }
     ]
