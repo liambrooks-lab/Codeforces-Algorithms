@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-30T05:17:18.643818+00:00",
+  "generated_at": "2026-10-31T05:48:20.408764+00:00",
   "stats": {
-    "total_solved": 9,
+    "total_solved": 10,
     "by_language": {
-      "Go": 9,
+      "Go": 10,
       "C++": 0
     },
     "categories_count": 2
@@ -99,6 +99,17 @@
         "space_complexity": "O(1)",
         "language": "Go",
         "file": "problem_set_900/2263B_Min_Matrices.go",
+        "has_tests": false
+      },
+      {
+        "problem_id": "2275C",
+        "problem_name": "Unrequited Love",
+        "title": "Unrequited Love",
+        "category": "Combinatorics / Sorting",
+        "time_complexity": "O(N log N) -> Standard sorting for frequency counting. Simple, clean, and cache-friendly.",
+        "space_complexity": "O(N) -> Single slice allocation, no map overhead.",
+        "language": "Go",
+        "file": "problem_set_900/2275C_Unrequited_Love.go",
         "has_tests": false
       },
       {
