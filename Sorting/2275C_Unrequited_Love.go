@@ -1,9 +1,10 @@
 /*
 {
     "problem_name": "Unrequited Love",
-    "category": "Combinatorics / Sorting",
+    "category": "Sorting",
     "time_complexity": "O(N log N) -> Standard sorting for frequency counting. Simple, clean, and cache-friendly.",
-    "space_complexity": "O(N) -> Single slice allocation, no map overhead."
+    "space_complexity": "O(N) -> Single slice allocation, no map overhead.",
+    "formula_used": "Triad mapping v[i] = a[i] + a[i+2] - a[i+4], sorted frequency count sum(c * (c - 1) / 2) minus overlapping distance-2 and distance-4 pairs"
 }
 */
 package main

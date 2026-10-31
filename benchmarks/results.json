@@ -1,64 +1,64 @@
 {
-  "benchmark_timestamp": "2026-10-31T05:48:20.358602+00:00",
+  "benchmark_timestamp": "2026-10-31T08:00:22.729643+00:00",
   "runs_per_solution": 5,
   "total_solutions": 10,
   "results": [
     {
-      "file": "problem_set_800/2261A_Souvlakity.go",
+      "file": "Game_Theory/2261A_Souvlakity.go",
       "language": "Go",
       "status": "SKIPPED",
       "reason": "Missing test fixtures (input.txt or expected.txt)"
     },
     {
-      "file": "problem_set_800/2269B_KiaKio.go",
+      "file": "Game_Theory/2261C_i_know_about_a_million_things.go",
       "language": "Go",
       "status": "SKIPPED",
       "reason": "Missing test fixtures (input.txt or expected.txt)"
     },
     {
-      "file": "problem_set_800/2275A_in_search_of_convenience.go",
+      "file": "Math/2260B_monocarp_and_projects.go",
       "language": "Go",
       "status": "SKIPPED",
       "reason": "Missing test fixtures (input.txt or expected.txt)"
     },
     {
-      "file": "problem_set_800/2275B_did_not_go_to_print.go",
+      "file": "Math/2269B_KiaKio.go",
       "language": "Go",
       "status": "SKIPPED",
       "reason": "Missing test fixtures (input.txt or expected.txt)"
     },
     {
-      "file": "problem_set_800/2276A_Perfect_Sandwiches.go",
+      "file": "Math/2275A_in_search_of_convenience.go",
       "language": "Go",
       "status": "SKIPPED",
       "reason": "Missing test fixtures (input.txt or expected.txt)"
     },
     {
-      "file": "problem_set_900/2260B_monocarp_and_projects.go",
+      "file": "Math/2276A_Perfect_Sandwiches.go",
       "language": "Go",
       "status": "SKIPPED",
       "reason": "Missing test fixtures (input.txt or expected.txt)"
     },
     {
-      "file": "problem_set_900/2261C_i_know_about_a_million_things.go",
+      "file": "Matrices/2263B_Min_Matrices.go",
       "language": "Go",
       "status": "SKIPPED",
       "reason": "Missing test fixtures (input.txt or expected.txt)"
     },
     {
-      "file": "problem_set_900/2263B_Min_Matrices.go",
+      "file": "Sorting/2275C_Unrequited_Love.go",
       "language": "Go",
       "status": "SKIPPED",
       "reason": "Missing test fixtures (input.txt or expected.txt)"
     },
     {
-      "file": "problem_set_900/2275C_Unrequited_Love.go",
+      "file": "Stacks/2275B_did_not_go_to_print.go",
       "language": "Go",
       "status": "SKIPPED",
       "reason": "Missing test fixtures (input.txt or expected.txt)"
     },
     {
-      "file": "problem_set_900/2276B_Replace_and_Compress.go",
+      "file": "Strings/2276B_Replace_and_Compress.go",
       "language": "Go",
       "status": "SKIPPED",
       "reason": "Missing test fixtures (input.txt or expected.txt)"

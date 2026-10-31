@@ -1,126 +1,144 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-31T05:48:20.408764+00:00",
+  "generated_at": "2026-10-31T07:58:25.458206+00:00",
   "stats": {
     "total_solved": 10,
     "by_language": {
       "Go": 10,
       "C++": 0
     },
-    "categories_count": 2
+    "categories_count": 6
   },
   "categories": {
-    "problem_set_800": [
+    "Game_Theory": [
       {
         "problem_id": "2261A",
         "problem_name": "Hey It's Me Souvlakity",
         "title": "Hey It's Me Souvlakity",
-        "category": "problem_set_800",
-        "time_complexity": "O(n)",
+        "category": "Game Theory",
+        "time_complexity": "O(N)",
         "space_complexity": "O(1)",
+        "formula_used": "Binary string ownership range evaluation; score = lastIndex('1') - firstIndex('1') for count >= 3, with base states for count <= 2",
         "language": "Go",
-        "file": "problem_set_800/2261A_Souvlakity.go",
-        "has_tests": false
-      },
-      {
-        "problem_id": "2269B",
-        "problem_name": "KiaKio",
-        "title": "KiaKio",
-        "category": "problem_set_800",
-        "time_complexity": "O(n)",
-        "space_complexity": "O(n)",
-        "language": "Go",
-        "file": "problem_set_800/2269B_KiaKio.go",
-        "has_tests": false
-      },
-      {
-        "problem_id": "2275A",
-        "problem_name": "In Search of Convenience",
-        "title": "In Search of Convenience",
-        "category": "problem_set_800",
-        "time_complexity": "O(1)",
-        "space_complexity": "O(1)",
-        "language": "Go",
-        "file": "problem_set_800/2275A_in_search_of_convenience.go",
-        "has_tests": false
-      },
-      {
-        "problem_id": "2275B",
-        "problem_name": "Did Not Go to Print",
-        "title": "Did Not Go to Print",
-        "category": "problem_set_800",
-        "time_complexity": "O(n)",
-        "space_complexity": "O(n)",
-        "language": "Go",
-        "file": "problem_set_800/2275B_did_not_go_to_print.go",
-        "has_tests": false
-      },
-      {
-        "problem_id": "2276A",
-        "problem_name": "Perfect Sandwiches",
-        "title": "Perfect Sandwiches",
-        "category": "Math / Greedy",
-        "time_complexity": "O(1) -> Pure mathematical derivation, zero loops.",
-        "space_complexity": "O(1) -> Only primitive variables used.",
-        "language": "Go",
-        "file": "problem_set_800/2276A_Perfect_Sandwiches.go",
-        "has_tests": false
-      }
-    ],
-    "problem_set_900": [
-      {
-        "problem_id": "2260B",
-        "problem_name": "Monocarp and Projects",
-        "title": "Monocarp and Projects",
-        "category": "problem_set_900",
-        "time_complexity": "O(min(k, y - x))",
-        "space_complexity": "O(1)",
-        "language": "Go",
-        "file": "problem_set_900/2260B_monocarp_and_projects.go",
+        "file": "Game_Theory/2261A_Souvlakity.go",
         "has_tests": false
       },
       {
         "problem_id": "2261C",
         "problem_name": "I Know About a Million Things",
         "title": "I Know About a Million Things",
-        "category": "Game Theory / Math",
+        "category": "Game Theory",
         "time_complexity": "O(N) -> Pure byte-level custom parser. Zero reflection overhead.",
         "space_complexity": "O(1) -> Absolute bare-metal. Slices bypassed entirely.",
+        "formula_used": "Parity state-space reduction; terminal losing states: (evens == 0 && odds == 3) || (evens == 1 && odds == 1)",
         "language": "Go",
-        "file": "problem_set_900/2261C_i_know_about_a_million_things.go",
+        "file": "Game_Theory/2261C_i_know_about_a_million_things.go",
+        "has_tests": false
+      }
+    ],
+    "Math": [
+      {
+        "problem_id": "2260B",
+        "problem_name": "Monocarp and Projects",
+        "title": "Monocarp and Projects",
+        "category": "Math",
+        "time_complexity": "O(min(k, y - x))",
+        "space_complexity": "O(1)",
+        "formula_used": "(y + i) % (x + i) == (y - x) % (x + i); early termination with remaining * (y - x) when x + i > y - x",
+        "language": "Go",
+        "file": "Math/2260B_monocarp_and_projects.go",
         "has_tests": false
       },
+      {
+        "problem_id": "2269B",
+        "problem_name": "KiaKio",
+        "title": "KiaKio",
+        "category": "Math",
+        "time_complexity": "O(N)",
+        "space_complexity": "O(N)",
+        "formula_used": "Sum of digit squares cycle convergence followed by combinatorics sum(c * (c - 1) / 2) over equivalence classes",
+        "language": "Go",
+        "file": "Math/2269B_KiaKio.go",
+        "has_tests": false
+      },
+      {
+        "problem_id": "2275A",
+        "problem_name": "In Search of Convenience",
+        "title": "In Search of Convenience",
+        "category": "Math",
+        "time_complexity": "O(1)",
+        "space_complexity": "O(1)",
+        "formula_used": "(x - x0)^2 + (y - y0)^2 = R^2; setting y = y0 simplifies to (x0 + R, y0)",
+        "language": "Go",
+        "file": "Math/2275A_in_search_of_convenience.go",
+        "has_tests": false
+      },
+      {
+        "problem_id": "2276A",
+        "problem_name": "Perfect Sandwiches",
+        "title": "Perfect Sandwiches",
+        "category": "Math",
+        "time_complexity": "O(1) -> Pure mathematical derivation, zero loops.",
+        "space_complexity": "O(1) -> Only primitive variables used.",
+        "formula_used": "min(b, a - b) if a > b else -1",
+        "language": "Go",
+        "file": "Math/2276A_Perfect_Sandwiches.go",
+        "has_tests": false
+      }
+    ],
+    "Matrices": [
       {
         "problem_id": "2263B",
         "problem_name": "Min Matrices",
         "title": "Min Matrices",
-        "category": "problem_set_900",
-        "time_complexity": "O(n^2)",
+        "category": "Matrices",
+        "time_complexity": "O(N^2)",
         "space_complexity": "O(1)",
+        "formula_used": "Constructive matrix filling: diagonal mins i+1 for i < x where x = 2n - k, row/col mins for >= x, and sequential filler",
         "language": "Go",
-        "file": "problem_set_900/2263B_Min_Matrices.go",
+        "file": "Matrices/2263B_Min_Matrices.go",
         "has_tests": false
-      },
+      }
+    ],
+    "Sorting": [
       {
         "problem_id": "2275C",
         "problem_name": "Unrequited Love",
         "title": "Unrequited Love",
-        "category": "Combinatorics / Sorting",
+        "category": "Sorting",
         "time_complexity": "O(N log N) -> Standard sorting for frequency counting. Simple, clean, and cache-friendly.",
         "space_complexity": "O(N) -> Single slice allocation, no map overhead.",
+        "formula_used": "Triad mapping v[i] = a[i] + a[i+2] - a[i+4], sorted frequency count sum(c * (c - 1) / 2) minus overlapping distance-2 and distance-4 pairs",
         "language": "Go",
-        "file": "problem_set_900/2275C_Unrequited_Love.go",
+        "file": "Sorting/2275C_Unrequited_Love.go",
         "has_tests": false
-      },
+      }
+    ],
+    "Stacks": [
+      {
+        "problem_id": "2275B",
+        "problem_name": "Did Not Go to Print",
+        "title": "Did Not Go to Print",
+        "category": "Stacks",
+        "time_complexity": "O(N)",
+        "space_complexity": "O(N)",
+        "formula_used": "Monotonic stack simulation for document cancellation ('1' push, '2' pop/print, '3' print)",
+        "language": "Go",
+        "file": "Stacks/2275B_did_not_go_to_print.go",
+        "has_tests": false
+      }
+    ],
+    "Strings": [
       {
         "problem_id": "2276B",
         "problem_name": "Replace and Compress",
         "title": "Replace and Compress",
-        "category": "Strings / Observations",
+        "category": "Strings",
         "time_complexity": "O(N) -> Single pass string scan. Zero actual compression simulations.",
         "space_complexity": "O(N) -> To store the string in memory, optimal for 3*10^5 constraints.",
+        "formula_used": "String invariance scan: total unique lengths = 1 + canIncrease (if s[i-1]==s[i]==s[i+1]) + canDecrease (if s[i-1]!=s[i]!=s[i+1])",
         "language": "Go",
-        "file": "problem_set_900/2276B_Replace_and_Compress.go",
+        "file": "Strings/2276B_Replace_and_Compress.go",
         "has_tests": false
       }
     ]

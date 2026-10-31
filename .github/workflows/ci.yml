@@ -6,13 +6,18 @@ on:
   pull_request:
     branches: [ main ]
 
+# Root-level permissions locked down to read-only
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   test:
     name: Codeforces Solutions Test & Verification (Go & C++)
     runs-on: ubuntu-latest
+
+    # Scoped permissions: write access restricted to job level for automated sync
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout Code
@@ -50,12 +55,12 @@ jobs:
       - name: Run Indexing Engine
         run: make index
 
-      - name: Secure Auto-Commit Updated Benchmarks and Index
+      - name: Secure Auto-Commit Updated Benchmarks, Index, and README
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore(automation): update benchmark results and problem index [skip ci]"
-          file_pattern: "benchmarks/results.json index/index.json"
+          commit_message: "chore(automation): update benchmark results, problem index, and README [skip ci]"
+          file_pattern: "benchmarks/results.json index/index.json index/README.md README.md"
           commit_user_name: "github-actions[bot]"
           commit_user_email: "41898282+github-actions[bot]@users.noreply.github.com"
           commit_author: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"

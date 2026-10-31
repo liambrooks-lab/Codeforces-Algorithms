@@ -1,9 +1,10 @@
 /*
 {
     "problem_name": "Replace and Compress",
-    "category": "Strings / Observations",
+    "category": "Strings",
     "time_complexity": "O(N) -> Single pass string scan. Zero actual compression simulations.",
-    "space_complexity": "O(N) -> To store the string in memory, optimal for 3*10^5 constraints."
+    "space_complexity": "O(N) -> To store the string in memory, optimal for 3*10^5 constraints.",
+    "formula_used": "String invariance scan: total unique lengths = 1 + canIncrease (if s[i-1]==s[i]==s[i+1]) + canDecrease (if s[i-1]!=s[i]!=s[i+1])"
 }
 */
 package main

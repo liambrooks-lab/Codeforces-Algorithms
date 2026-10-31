@@ -1,12 +1,12 @@
 /*
 {
     "problem_name": "Did Not Go to Print",
-    "category": "problem_set_800",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(n)"
+    "category": "Stacks",
+    "time_complexity": "O(N)",
+    "space_complexity": "O(N)",
+    "formula_used": "Monotonic stack simulation for document cancellation ('1' push, '2' pop/print, '3' print)"
 }
 */
-
 package main
 
 import (

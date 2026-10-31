@@ -1,12 +1,12 @@
 /*
 {
     "problem_name": "KiaKio",
-    "category": "problem_set_800",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(n)"
+    "category": "Math",
+    "time_complexity": "O(N)",
+    "space_complexity": "O(N)",
+    "formula_used": "Sum of digit squares cycle convergence followed by combinatorics sum(c * (c - 1) / 2) over equivalence classes"
 }
 */
-
 package main
 
 import (

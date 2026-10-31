@@ -1,9 +1,10 @@
 /*
 {
     "problem_name": "Perfect Sandwiches",
-    "category": "Math / Greedy",
+    "category": "Math",
     "time_complexity": "O(1) -> Pure mathematical derivation, zero loops.",
-    "space_complexity": "O(1) -> Only primitive variables used."
+    "space_complexity": "O(1) -> Only primitive variables used.",
+    "formula_used": "min(b, a - b) if a > b else -1"
 }
 */
 package main

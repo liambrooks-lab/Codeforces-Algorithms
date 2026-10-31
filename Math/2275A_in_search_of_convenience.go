@@ -1,12 +1,12 @@
 /*
 {
     "problem_name": "In Search of Convenience",
-    "category": "problem_set_800",
+    "category": "Math",
     "time_complexity": "O(1)",
-    "space_complexity": "O(1)"
+    "space_complexity": "O(1)",
+    "formula_used": "(x - x0)^2 + (y - y0)^2 = R^2; setting y = y0 simplifies to (x0 + R, y0)"
 }
 */
-
 package main
 
 import (

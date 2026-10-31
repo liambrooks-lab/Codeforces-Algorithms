@@ -3,10 +3,10 @@
     "problem_name": "...",
     "category": "...",
     "time_complexity": "...",
-    "space_complexity": "..."
+    "space_complexity": "...",
+    "formula_used": "..."
 }
 */
-
 package main
 
 import (

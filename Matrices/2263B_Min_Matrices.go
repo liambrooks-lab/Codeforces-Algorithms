@@ -1,12 +1,12 @@
 /*
 {
     "problem_name": "Min Matrices",
-    "category": "problem_set_900",
-    "time_complexity": "O(n^2)",
-    "space_complexity": "O(1)"
+    "category": "Matrices",
+    "time_complexity": "O(N^2)",
+    "space_complexity": "O(1)",
+    "formula_used": "Constructive matrix filling: diagonal mins i+1 for i < x where x = 2n - k, row/col mins for >= x, and sequential filler"
 }
 */
-
 package main
 
 import (

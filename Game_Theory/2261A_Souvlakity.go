@@ -1,12 +1,12 @@
 /*
 {
     "problem_name": "Hey It's Me Souvlakity",
-    "category": "problem_set_800",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)"
+    "category": "Game Theory",
+    "time_complexity": "O(N)",
+    "space_complexity": "O(1)",
+    "formula_used": "Binary string ownership range evaluation; score = lastIndex('1') - firstIndex('1') for count >= 3, with base states for count <= 2"
 }
 */
-
 package main
 
 import (

@@ -1,9 +1,10 @@
 /*
 {
     "problem_name": "I Know About a Million Things",
-    "category": "Game Theory / Math",
+    "category": "Game Theory",
     "time_complexity": "O(N) -> Pure byte-level custom parser. Zero reflection overhead.",
-    "space_complexity": "O(1) -> Absolute bare-metal. Slices bypassed entirely."
+    "space_complexity": "O(1) -> Absolute bare-metal. Slices bypassed entirely.",
+    "formula_used": "Parity state-space reduction; terminal losing states: (evens == 0 && odds == 3) || (evens == 1 && odds == 1)"
 }
 */
 package main

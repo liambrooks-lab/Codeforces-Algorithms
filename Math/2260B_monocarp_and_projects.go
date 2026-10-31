@@ -1,12 +1,12 @@
 /*
 {
     "problem_name": "Monocarp and Projects",
-    "category": "problem_set_900",
+    "category": "Math",
     "time_complexity": "O(min(k, y - x))",
-    "space_complexity": "O(1)"
+    "space_complexity": "O(1)",
+    "formula_used": "(y + i) % (x + i) == (y - x) % (x + i); early termination with remaining * (y - x) when x + i > y - x"
 }
 */
-
 package main
 
 import (
