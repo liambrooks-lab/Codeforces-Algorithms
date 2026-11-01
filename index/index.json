@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-31T08:06:08.772001+00:00",
+  "generated_at": "2026-11-01T07:04:38.200372+00:00",
   "stats": {
-    "total_solved": 10,
+    "total_solved": 11,
     "by_language": {
-      "Go": 10,
+      "Go": 11,
       "C++": 0
     },
     "categories_count": 6
@@ -59,6 +59,18 @@
         "formula_used": "Sum of digit squares cycle convergence followed by combinatorics sum(c * (c - 1) / 2) over equivalence classes",
         "language": "Go",
         "file": "Math/2269B_KiaKio.go",
+        "has_tests": false
+      },
+      {
+        "problem_id": "2274A",
+        "problem_name": "The Projections of Paco",
+        "title": "The Projections of Paco",
+        "category": "Math",
+        "time_complexity": "O(N)",
+        "space_complexity": "O(1)",
+        "formula_used": "pos = 2 * a_i - pos; solve for initial p giving final pos = 0",
+        "language": "Go",
+        "file": "Math/2274A_The_Projections_of_Paco.go",
         "has_tests": false
       },
       {
