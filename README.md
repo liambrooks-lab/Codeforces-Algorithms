@@ -49,6 +49,12 @@ The repository is maintained autonomously and structured strictly by algorithmic
 |---|---|---|---|---|
 | [Min Matrices](Matrices/2263B_Min_Matrices.go) | Matrices | O(N^2) | O(1) | Constructive matrix filling: diagonal mins i+1 for i < x where x = 2n - k, row/col mins for >= x, and sequential filler |
 
+### Prefix Sum
+
+| Problem | Category | Time | Space | Formula/Notes |
+|---|---|---|---|---|
+| [Subarrays](Prefix_Sum/2276C_Subarrays.go) | Prefix Sum / Math | O(N) -> Single pass with delayed mapping. | O(N) -> Array allocations for prefixes and tracking counts. | prefix_sum[r] % k == prefix_sum[l-1] % k with a sliding delayed map (delay = k) |
+
 ### Sorting
 
 | Problem | Category | Time | Space | Formula/Notes |

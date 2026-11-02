@@ -1,7 +1,7 @@
 {
-  "benchmark_timestamp": "2026-11-01T07:06:56.504263+00:00",
+  "benchmark_timestamp": "2026-11-02T11:11:11.676075+00:00",
   "runs_per_solution": 5,
-  "total_solutions": 11,
+  "total_solutions": 12,
   "results": [
     {
       "file": "Game_Theory/2261A_Souvlakity.go",
@@ -47,6 +47,12 @@
     },
     {
       "file": "Matrices/2263B_Min_Matrices.go",
+      "language": "Go",
+      "status": "SKIPPED",
+      "reason": "Missing test fixtures (input.txt or expected.txt)"
+    },
+    {
+      "file": "Prefix_Sum/2276C_Subarrays.go",
       "language": "Go",
       "status": "SKIPPED",
       "reason": "Missing test fixtures (input.txt or expected.txt)"

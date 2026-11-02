@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-11-01T07:06:56.558258+00:00",
+  "generated_at": "2026-11-02T11:11:11.736576+00:00",
   "stats": {
-    "total_solved": 11,
+    "total_solved": 12,
     "by_language": {
-      "Go": 11,
+      "Go": 12,
       "C++": 0
     },
-    "categories_count": 6
+    "categories_count": 7
   },
   "categories": {
     "Game_Theory": [
@@ -109,6 +109,20 @@
         "formula_used": "Constructive matrix filling: diagonal mins i+1 for i < x where x = 2n - k, row/col mins for >= x, and sequential filler",
         "language": "Go",
         "file": "Matrices/2263B_Min_Matrices.go",
+        "has_tests": false
+      }
+    ],
+    "Prefix_Sum": [
+      {
+        "problem_id": "2276C",
+        "problem_name": "Subarrays",
+        "title": "Subarrays",
+        "category": "Prefix Sum / Math",
+        "time_complexity": "O(N) -> Single pass with delayed mapping.",
+        "space_complexity": "O(N) -> Array allocations for prefixes and tracking counts.",
+        "formula_used": "prefix_sum[r] % k == prefix_sum[l-1] % k with a sliding delayed map (delay = k)",
+        "language": "Go",
+        "file": "Prefix_Sum/2276C_Subarrays.go",
         "has_tests": false
       }
     ],
