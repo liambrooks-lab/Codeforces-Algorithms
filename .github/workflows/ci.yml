@@ -55,12 +55,13 @@ jobs:
       - name: Run Indexing Engine
         run: make index
 
-      - name: Secure Auto-Commit Updated Benchmarks, Index, and README
+      - name: Secure Auto-Commit Updated Benchmarks and Index
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore(automation): update benchmark results, problem index, and README [skip ci]"
-          file_pattern: "benchmarks/results.json index/index.json index/README.md README.md"
+          commit_message: "chore(automation): update benchmark results and problem index [skip ci]"
+          # Root README.md / README.hi.md are hand-maintained — never auto-commit them
+          file_pattern: "benchmarks/results.json index/index.json index/README.md"
           commit_user_name: "github-actions[bot]"
           commit_user_email: "41898282+github-actions[bot]@users.noreply.github.com"
           commit_author: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
