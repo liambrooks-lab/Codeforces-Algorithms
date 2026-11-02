@@ -26,9 +26,12 @@
 - प्रॉब्लम कंस्ट्रेंट्स (constraints) और एज-केस (edge-case) डेफिनेशन्स।
 - एग्जीक्यूशन मेट्रिक्स (टाइम और स्पेस कॉम्प्लेक्सिटी, जो रियल-टाइम में सिंक होते हैं)।
 
+---
+
 ### स्निपेट्स (Snippets)
 
-**फ़ास्ट I/O &mdash; बाइट-लेवल इंटीजर पार्सिंग:**
+**फ़ास्ट I/O: बाइट-लेवल इंटीजर पार्सिंग:**
+-   **फॉर्मूला:** डायरेक्ट बफर बाइट अरिथमेटिक `res = (res * 10) + (char - '0')` के ज़रिए स्टैंडर्ड लाइब्रेरी रिफ्लेक्शन को बायपास करना।
 ```go
 // बड़े I/O ऑपरेशन्स के लिए यूनिवर्सल बाइट-लेवल पार्सर; O(1) स्पेस
 func readInt(in *bufio.Reader) int {
@@ -50,27 +53,22 @@ func readInt(in *bufio.Reader) int {
     return res * sign
 }
 ```
-**फॉर्मूला:**
-```text
-res = (res * 10) + (char - '0') (डायरेक्ट बफर बाइट अरिथमेटिक का उपयोग करके)
-```
 
-**गेम थ्योरी &mdash; पैरिटी स्टेट इवैल्यूएशन:**
+**गेम थ्योरी: पैरिटी स्टेट इवैल्यूएशन:**
+-   **फॉर्मूला:** सीक्वेंस कॉन्फ़िगरेशन के बजाय कंपोनेंट ऑब्जेक्ट पैरिटी के माध्यम से टर्मिनल स्टेट्स को सिमेट्रिक रूप से निर्धारित करता है।
 ```go
 // O(N) टाइम और O(1) स्पेस में ज़ीरो-सम (zero-sum) टर्मिनल स्थितियों का मूल्यांकन
 func evaluateGameState(odds, evens int) bool {
+    // इनवैरिएंट स्टेट बाउंड्रीज़ के आधार पर टर्मिनल हारने की स्थिति निर्धारित करें
     if (evens == 0 && odds == 3) || (evens == 1 && odds == 1) {
         return false // प्लेयर 2 जीत सुनिश्चित करता है
     }
     return true // प्लेयर 1 जीत सुनिश्चित करता है
 }
 ```
-**फॉर्मूला:**
-```text
-Terminal State ≡ (Σ Evens = 0 ∧ Σ Odds = 3) ∨ (Σ Evens = 1 ∧ Σ Odds = 1)
-```
 
-**मैथ (Math) &mdash; मॉड्यूलो अरिथमेटिक और स्टेट रिडक्शन:**
+**मैथ (Math): मॉड्यूलो अरिथमेटिक और स्टेट रिडक्शन:**
+-   **फॉर्मूला:** `(y + i) % (x + i) ≡ (y - x) % (x + i)` (O(1) स्पेस कन्वर्जेंस के लिए ब्लॉक एक्यूमुलेशन का उपयोग करके)।
 ```go
 // अर्ली टर्मिनेशन बाउंड्स के साथ मॉड्यूलो अरिथमेटिक; O(1) ऑक्ज़ीलियरी स्पेस
 func computeModuloState(x, y, k int64) int64 {
@@ -85,12 +83,9 @@ func computeModuloState(x, y, k int64) int64 {
     return ans
 }
 ```
-**फॉर्मूला:**
-```text
-(y + i) % (x + i) ≡ (y - x) % (x + i)
-```
 
 **मैट्रिसेस (Matrices) &mdash; कंस्ट्रक्टिव बाउंड्री इवैल्यूएशन:**
+-   **फॉर्मूला:** थ्रेशोल्ड वैल्यूज़ `boundary_val = min(row_idx, col_idx) + 1` के आधार पर मैट्रिक्स इनवैरिएंट्स को रिज़ॉल्व करता है।
 ```go
 // डायमेंशनल थ्रेशोल्ड्स के आधार पर मैट्रिक्स इनवैरिएंट्स का निर्माण; O(N^2) टाइम, O(1) स्पेस
 func constructMatrixBoundaries(n, k int) [][]int {
@@ -109,12 +104,33 @@ func constructMatrixBoundaries(n, k int) [][]int {
     return matrix
 }
 ```
-**फॉर्मूला:**
-```text
-boundary_val = min(row_idx, col_idx) + 1
+
+**प्रीफिक्स सम (Prefix Sum): मॉड्यूलो स्टेट ट्रैकिंग:**
+-   **फॉर्मूला:** प्रीफिक्स सम के मॉड्यूलर इक्विवेलेंस को ट्रैक करके वैलिड सबऐरे (subarray) बाउंड्रीज़ को रिज़ॉल्व करता है: `Prefix[r] % k == Prefix[l-1] % k`।
+```go
+// कंस्ट्रेंड सबऐरे एग्रीगेशन के लिए प्रीफिक्स सम मॉड्यूलर स्टेट्स को ट्रैक करना; O(N) टाइम, O(K) स्पेस
+func countValidPrefixStates(nums []int, k int, delay int) int64 {
+    prefix := make([]int, len(nums)+1)
+    for i := 1; i <= len(nums); i++ {
+        // k मॉड के साथ कंटीन्यूअस रनिंग प्रीफिक्स सम (नेगेटिव वैल्यूज को ग्रेसफुली हैंडल करते हुए)
+        prefix[i] = ((prefix[i-1] + nums[i-1]) % k + k) % k
+    }
+    
+    stateCount := make([]int, k)
+    var validSubarrays int64 = 0
+    
+    // लेंथ कंस्ट्रेंट्स (जैसे, length > k) लागू करने के लिए डिलेड स्लाइडिंग विंडो
+    for r := delay; r <= len(nums); r++ {
+        stateCount[prefix[r-delay]]++
+        validSubarrays += int64(stateCount[prefix[r]])
+    }
+    
+    return validSubarrays
+}
 ```
 
-**सॉर्टिंग &mdash; फ्रीक्वेंसी कॉम्बिनेटरिक्स:**
+**सॉर्टिंग: फ्रीक्वेंसी कॉम्बिनेटरिक्स:**
+-   **फॉर्मूला:** सीक्वेंशियली सॉर्टेड इक्विवेलेंस क्लासेज के लिए, कुल एक जैसे पेयर्स (identical pairs) $\sum \frac{c \times (c - 1)}{2}$ के बराबर होते हैं जहाँ $c$ फ्रीक्वेंसी है।
 ```go
 // O(N log N) सॉर्टिंग के बाद एक जैसे पेयर कॉम्बिनेशन्स की गणना; O(1) ऑक्ज़ीलियरी स्पेस
 func countIdenticalPairs(sortedArray []int) int64 {
@@ -132,12 +148,9 @@ func countIdenticalPairs(sortedArray []int) int64 {
     return totalPairs
 }
 ```
-**फॉर्मूला:**
-```text
-Total Identical Pairs = Σ (c_i * (c_i - 1)) / 2
-```
 
-**स्टैक्स (Stacks) &mdash; मोनोटोनिक स्टेट कैंसिलेशन:**
+**स्टैक्स (Stacks): मोनोटोनिक स्टेट कैंसिलेशन:**
+-   **फॉर्मूला:** `while (stack ∩ violation_condition) { stack.pop() } stack.push(state)`
 ```go
 // मोनोटोनिक स्टैक के माध्यम से सीक्वेंस स्टेट म्यूटेशन्स को रिज़ॉल्व करना; O(N) टाइम, O(N) स्पेस
 func processMonotonicState(sequence []int) []int {
@@ -151,12 +164,9 @@ func processMonotonicState(sequence []int) []int {
     return stack
 }
 ```
-**फॉर्मूला:**
-```text
-while (stack ∩ violation_condition) { stack.pop() } stack.push(state)
-```
 
-**स्ट्रिंग्स (Strings) &mdash; इनवैरिएंट विंडो स्कैन:**
+**स्ट्रिंग्स (Strings): इनवैरिएंट विंडो स्कैन:**
+-   **फॉर्मूला:** लोकल स्टेट इवैल्यूएशन `(W_k = '000' ∨ W_k = '111') ∨ (W_k = '010' ∨ W_k = '101')`।
 ```go
 // स्टेट इनवैरिएंट्स के लिए लोकलाइज़्ड विंडोज़ का स्कैन; O(N) टाइम, O(1) स्पेस
 func scanInvariants(s string) (bool, bool) {
@@ -174,10 +184,6 @@ func scanInvariants(s string) (bool, bool) {
     }
     return condA, condB
 }
-```
-**फॉर्मूला:**
-```text
-Length Invariance ≡ (W_k = '000' ∨ W_k = '111') ∨ (W_k = '010' ∨ W_k = '101')
 ```
 
 ---
@@ -257,5 +263,5 @@ make push msg="commit message"
   (c) 2026 Rudranarayan Jena
 </div>
 <p align="center">
- Codeforces &middot; DSA &middot; C++ &middot; Golang
+ Codeforces &middot; Mathemactics &middot; C++ &middot; Golang
 </p>
