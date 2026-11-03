@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-11-02T11:48:59.270723+00:00",
+  "generated_at": "2026-11-03T05:35:43.199271+00:00",
   "stats": {
-    "total_solved": 12,
+    "total_solved": 13,
     "by_language": {
-      "Go": 12,
+      "Go": 13,
       "C++": 0
     },
-    "categories_count": 7
+    "categories_count": 8
   },
   "categories": {
     "Game_Theory": [
@@ -33,6 +33,20 @@
         "formula_used": "Parity state-space reduction; terminal losing states: (evens == 0 && odds == 3) || (evens == 1 && odds == 1)",
         "language": "Go",
         "file": "Game_Theory/2261C_i_know_about_a_million_things.go",
+        "has_tests": false
+      }
+    ],
+    "Greedy": [
+      {
+        "problem_id": "2274B",
+        "problem_name": "Prefix",
+        "title": "Prefix",
+        "category": "Math / Greedy",
+        "time_complexity": "O(N) -> State space collapse to tracking min/max prefix sums",
+        "space_complexity": "O(1) -> Bare-metal constant space",
+        "formula_used": "s_new \u2208 {a_i, s + a_i, 2s + a_i}; track only min_s and max_s",
+        "language": "Go",
+        "file": "Greedy/2274B_Prefix.go",
         "has_tests": false
       }
     ],

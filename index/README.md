@@ -9,6 +9,12 @@ Automated problem index categorized by algorithmic taxonomy.
 | [Hey It's Me Souvlakity](../Game_Theory/2261A_Souvlakity.go) | Game Theory | O(N) | O(1) | Binary string ownership range evaluation; score = lastIndex('1') - firstIndex('1') for count >= 3, with base states for count <= 2 |
 | [I Know About a Million Things](../Game_Theory/2261C_i_know_about_a_million_things.go) | Game Theory | O(N) -> Pure byte-level custom parser. Zero reflection overhead. | O(1) -> Absolute bare-metal. Slices bypassed entirely. | Parity state-space reduction; terminal losing states: (evens == 0 && odds == 3) \|\| (evens == 1 && odds == 1) |
 
+## Greedy
+
+| Problem | Category | Time | Space | Formula/Notes |
+|---|---|---|---|---|
+| [Prefix](../Greedy/2274B_Prefix.go) | Math / Greedy | O(N) -> State space collapse to tracking min/max prefix sums | O(1) -> Bare-metal constant space | s_new ∈ {a_i, s + a_i, 2s + a_i}; track only min_s and max_s |
+
 ## Math
 
 | Problem | Category | Time | Space | Formula/Notes |
