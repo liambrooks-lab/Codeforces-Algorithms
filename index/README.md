@@ -21,6 +21,7 @@ Automated problem index categorized by algorithmic taxonomy.
 |---|---|---|---|---|
 | [Monocarp and Projects](../Math/2260B_monocarp_and_projects.go) | Math | O(min(k, y - x)) | O(1) | (y + i) % (x + i) == (y - x) % (x + i); early termination with remaining * (y - x) when x + i > y - x |
 | [KiaKio](../Math/2269B_KiaKio.go) | Math | O(N) | O(N) | Sum of digit squares cycle convergence followed by combinatorics sum(c * (c - 1) / 2) over equivalence classes |
+| [Robot Odd Moves](../Math/2271A_Robot_Odd_Moves.go) | Math | O(1) -> Pure mathematical parity evaluation. | O(1) -> Bare-metal constant space. | if b > a+1 { -1 } else if a%2 == b%2 { a } else { a+1 } |
 | [The Projections of Paco](../Math/2274A_The_Projections_of_Paco.go) | Math | O(N) | O(1) | pos = 2 * a_i - pos; solve for initial p giving final pos = 0 |
 | [In Search of Convenience](../Math/2275A_in_search_of_convenience.go) | Math | O(1) | O(1) | (x - x0)^2 + (y - y0)^2 = R^2; setting y = y0 simplifies to (x0 + R, y0) |
 | [Perfect Sandwiches](../Math/2276A_Perfect_Sandwiches.go) | Math | O(1) -> Pure mathematical derivation, zero loops. | O(1) -> Only primitive variables used. | min(b, a - b) if a > b else -1 |

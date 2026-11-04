@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-11-03T05:35:43.199271+00:00",
+  "generated_at": "2026-11-04T06:01:02.836878+00:00",
   "stats": {
-    "total_solved": 13,
+    "total_solved": 14,
     "by_language": {
-      "Go": 13,
+      "Go": 14,
       "C++": 0
     },
     "categories_count": 8
@@ -73,6 +73,18 @@
         "formula_used": "Sum of digit squares cycle convergence followed by combinatorics sum(c * (c - 1) / 2) over equivalence classes",
         "language": "Go",
         "file": "Math/2269B_KiaKio.go",
+        "has_tests": false
+      },
+      {
+        "problem_id": "2271A",
+        "problem_name": "Robot Odd Moves",
+        "title": "Robot Odd Moves",
+        "category": "Math",
+        "time_complexity": "O(1) -> Pure mathematical parity evaluation.",
+        "space_complexity": "O(1) -> Bare-metal constant space.",
+        "formula_used": "if b > a+1 { -1 } else if a%2 == b%2 { a } else { a+1 }",
+        "language": "Go",
+        "file": "Math/2271A_Robot_Odd_Moves.go",
         "has_tests": false
       },
       {
