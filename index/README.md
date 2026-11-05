@@ -56,3 +56,9 @@ Automated problem index categorized by algorithmic taxonomy.
 |---|---|---|---|---|
 | [Replace and Compress](../Strings/2276B_Replace_and_Compress.go) | Strings | O(N) -> Single pass string scan. Zero actual compression simulations. | O(N) -> To store the string in memory, optimal for 3*10^5 constraints. | String invariance scan: total unique lengths = 1 + canIncrease (if s[i-1]==s[i]==s[i+1]) + canDecrease (if s[i-1]!=s[i]!=s[i+1]) |
 
+## Two Pointers
+
+| Problem | Category | Time | Space | Formula/Notes |
+|---|---|---|---|---|
+| [Rumb Needs a Hand](../Two_Pointers/2264A_Rumb_Needs_a_Hand.go) | Two Pointers | O(N) -> Single inward pass using two pointers. | O(N) -> Array storage, O(1) auxiliary space. | Symmetric matching for misplaced elements: p[left] == right && p[right] == left |
+

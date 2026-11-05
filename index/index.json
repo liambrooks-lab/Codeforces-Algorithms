@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-11-04T06:01:02.836878+00:00",
+  "generated_at": "2026-11-05T12:56:53.588687+00:00",
   "stats": {
-    "total_solved": 14,
+    "total_solved": 15,
     "by_language": {
-      "Go": 14,
+      "Go": 15,
       "C++": 0
     },
-    "categories_count": 8
+    "categories_count": 9
   },
   "categories": {
     "Game_Theory": [
@@ -191,6 +191,20 @@
         "formula_used": "String invariance scan: total unique lengths = 1 + canIncrease (if s[i-1]==s[i]==s[i+1]) + canDecrease (if s[i-1]!=s[i]!=s[i+1])",
         "language": "Go",
         "file": "Strings/2276B_Replace_and_Compress.go",
+        "has_tests": false
+      }
+    ],
+    "Two_Pointers": [
+      {
+        "problem_id": "2264A",
+        "problem_name": "Rumb Needs a Hand",
+        "title": "Rumb Needs a Hand",
+        "category": "Two Pointers",
+        "time_complexity": "O(N) -> Single inward pass using two pointers.",
+        "space_complexity": "O(N) -> Array storage, O(1) auxiliary space.",
+        "formula_used": "Symmetric matching for misplaced elements: p[left] == right && p[right] == left",
+        "language": "Go",
+        "file": "Two_Pointers/2264A_Rumb_Needs_a_Hand.go",
         "has_tests": false
       }
     ]
