@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-11-05T12:56:53.588687+00:00",
+  "generated_at": "2026-11-06T03:44:33.767667+00:00",
   "stats": {
-    "total_solved": 15,
+    "total_solved": 16,
     "by_language": {
-      "Go": 15,
+      "Go": 16,
       "C++": 0
     },
     "categories_count": 9
@@ -37,6 +37,18 @@
       }
     ],
     "Greedy": [
+      {
+        "problem_id": "2262A1",
+        "problem_name": "Floor of MEX (Easy Version)",
+        "title": "Floor of MEX (Easy Version)",
+        "category": "Greedy / Constructive Algorithms",
+        "time_complexity": "O(N) -> Constructive maximal subset using difference array.",
+        "space_complexity": "O(N) -> Single difference array allocation.",
+        "formula_used": "diff[a_k * k]++, diff[min(n, (a_k+1)*k)]--; Maximal subset bypasses forbidden ranges",
+        "language": "Go",
+        "file": "Greedy/2262A1_Floor_of_MEX_Easy.go",
+        "has_tests": false
+      },
       {
         "problem_id": "2274B",
         "problem_name": "Prefix",
