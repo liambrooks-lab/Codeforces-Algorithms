@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-11-06T03:44:33.767667+00:00",
+  "generated_at": "2026-11-07T07:41:22.952339+00:00",
   "stats": {
-    "total_solved": 16,
+    "total_solved": 17,
     "by_language": {
-      "Go": 16,
+      "Go": 17,
       "C++": 0
     },
     "categories_count": 9
@@ -47,6 +47,18 @@
         "formula_used": "diff[a_k * k]++, diff[min(n, (a_k+1)*k)]--; Maximal subset bypasses forbidden ranges",
         "language": "Go",
         "file": "Greedy/2262A1_Floor_of_MEX_Easy.go",
+        "has_tests": false
+      },
+      {
+        "problem_id": "2268A",
+        "problem_name": "K Is Important",
+        "title": "K Is Important",
+        "category": "Greedy / Math",
+        "time_complexity": "O(N) -> Pure mathematical reduction of the state space.",
+        "space_complexity": "O(N) -> Array storage, O(1) auxiliary space.",
+        "formula_used": "ops = min(k-1, n-k+1); score = sum(max(pairs)) + sum(middle_removals_if_any)",
+        "language": "Go",
+        "file": "Greedy/2268A_K_Is_Important.go",
         "has_tests": false
       },
       {

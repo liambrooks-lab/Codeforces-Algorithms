@@ -14,6 +14,7 @@ Automated problem index categorized by algorithmic taxonomy.
 | Problem | Category | Time | Space | Formula/Notes |
 |---|---|---|---|---|
 | [Floor of MEX (Easy Version)](../Greedy/2262A1_Floor_of_MEX_Easy.go) | Greedy / Constructive Algorithms | O(N) -> Constructive maximal subset using difference array. | O(N) -> Single difference array allocation. | diff[a_k * k]++, diff[min(n, (a_k+1)*k)]--; Maximal subset bypasses forbidden ranges |
+| [K Is Important](../Greedy/2268A_K_Is_Important.go) | Greedy / Math | O(N) -> Pure mathematical reduction of the state space. | O(N) -> Array storage, O(1) auxiliary space. | ops = min(k-1, n-k+1); score = sum(max(pairs)) + sum(middle_removals_if_any) |
 | [Prefix](../Greedy/2274B_Prefix.go) | Math / Greedy | O(N) -> State space collapse to tracking min/max prefix sums | O(1) -> Bare-metal constant space | s_new ∈ {a_i, s + a_i, 2s + a_i}; track only min_s and max_s |
 
 ## Math
