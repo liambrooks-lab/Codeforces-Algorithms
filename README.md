@@ -1,6 +1,6 @@
 # Codeforces-Algorithms
 
-[हिंदी में पढ़ें](https://github.com/liambrooks-lab/Codeforces-Algorithms/blob/main/README.hi.md)
+[हिंदी में पढ़ें](https://github.com/R-Jena/Codeforces-Algorithms/blob/main/README.hi.md)
 
 ---
 > **An algorithmic infrastructure, independently architected for state-space optimization, advanced data structure engineering, and computational efficiency.**
@@ -14,7 +14,6 @@ Engineered entirely from the ground up, this repository serves as a systematic a
 Solutions are implemented across three runtime environments based on architectural characteristics:
 
 - **`C++`** (C++17) &mdash; Direct memory control, pointer arithmetic, and deterministic execution performance.
-- **`Python 3`** &mdash; Standard library data structures, CI/CD orchestration, and repository management.
 - **`Golang`** (Go 1.22) &mdash; Static typing, explicit memory allocation, and custom standard I/O optimization to minimize execution latency.
 
 ---
@@ -64,6 +63,51 @@ func evaluateGameState(odds, evens int) bool {
         return false // Player 2 forces a win
     }
     return true // Player 1 forces a win
+}
+```
+
+**Greedy &mdash; Min/Max State Collapse:**
+-   **Formula:** Collapses exponential state-space trees into linear bounds tracking `s_new ∈ {a_i, s + a_i, 2s + a_i}`.
+```go
+// Greedily tracks extreme bounds to evaluate future maximums; O(N) time, O(1) space
+func collapseStateSpace(a []int64) int64 {
+    ans, minS, maxS := a[0], a[0], a[0]
+    for i := 1; i < len(a); i++ {
+        val := a[i]
+        // Test current extremes against possible new elements
+        e1, e2, e3 := val-minS, val-maxS, val
+        e4, e5 := val+minS, val+maxS
+        ans = max(ans, max(e1, max(e2, max(e3, max(e4, e5)))))
+        
+        // Generate new prefix boundaries
+        s1, s2, s3 := val, minS+val, 2*minS+val
+        s4, s5 := maxS+val, 2*maxS+val
+        minS = min(s1, min(s2, min(s3, min(s4, s5))))
+        maxS = max(s1, max(s2, max(s3, max(s4, s5))))
+    }
+    return ans
+}
+```
+
+**Two Pointers &mdash; Symmetric Cross-Matching:**
+-   **Formula:** Resolves misplaced permutation boundaries via symmetric index validation `p[left] == right && p[right] == left`.
+```go
+// Validates single-operation array reversals via inward pointers; O(N) time, O(1) space
+func isValidReversal(p []int) bool {
+    left, right := 1, len(p)-1 // Assuming 1-based logic within bounds
+    for left < right {
+        for left < right && p[left] == left { left++ }
+        for left < right && p[right] == right { right-- }
+        if left >= right { return true }
+        
+        // Ensure the boundary elements strictly cross-match
+        if p[left] != right || p[right] != left {
+            return false
+        }
+        left++
+        right--
+    }
+    return true
 }
 ```
 

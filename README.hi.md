@@ -1,6 +1,6 @@
 # Codeforces-Algorithms
 
-[Read in English](https://github.com/liambrooks-lab/Codeforces-Algorithms/blob/main/README.md)
+[Read in English](https://github.com/R-Jena/Codeforces-Algorithms/blob/main/README.md)
 
 ---
 > **स्टेट-स्पेस ऑप्टिमाइज़ेशन, एडवांस्ड डेटा स्ट्रक्चर इंजीनियरिंग, और कंप्यूटेशनल एफिशिएंसी (computational efficiency) के लिए स्वतंत्र रूप से डिज़ाइन किया गया एक एल्गोरिथम इंफ्रास्ट्रक्चर।**
@@ -14,7 +14,6 @@
 समाधानों को उनके आर्किटेक्चरल विशेषताओं के आधार पर तीन रनटाइम एन्वायरनमेंट में लागू किया गया है:
 
 - **`C++`** (C++17) &mdash; डायरेक्ट मेमोरी कंट्रोल, पॉइंटर अरिथमेटिक, और सुनिश्चित एग्जीक्यूशन परफॉरमेंस।
-- **`Python 3`** &mdash; स्टैंडर्ड लाइब्रेरी डेटा स्ट्रक्चर्स, CI/CD ऑर्केस्ट्रेशन, और रिपॉजिटरी मैनेजमेंट।
 - **`Golang`** (Go 1.22) &mdash; स्टैटिक टाइपिंग, स्पष्ट मेमोरी एलोकेशन, और एग्जीक्यूशन लेटेंसी को कम करने के लिए कस्टम स्टैंडर्ड I/O ऑप्टिमाइज़ेशन।
 
 ---
@@ -67,7 +66,52 @@ func evaluateGameState(odds, evens int) bool {
 }
 ```
 
-**मैथ (Math): मॉड्यूलो अरिथमेटिक और स्टेट रिडक्शन:**
+**ग्रीडी (Greedy) &mdash; मिन/मैक्स स्टेट कोलैप्स:**
+-   **फॉर्मूला:** एक्सपोनेंशियल (exponential) स्टेट-स्पेस ट्रीज़ को लीनियर बाउंड्स ट्रैकिंग `s_new ∈ {a_i, s + a_i, 2s + a_i}` में कोलैप्स करता है।
+```go
+// भविष्य के मैक्सिमम का मूल्यांकन करने के लिए एक्सट्रीम बाउंड्स को ग्रीडी तरीके से ट्रैक करना; O(N) टाइम, O(1) स्पेस
+func collapseStateSpace(a []int64) int64 {
+    ans, minS, maxS := a[0], a[0], a[0]
+    for i := 1; i < len(a); i++ {
+        val := a[i]
+        // संभावित नए एलिमेंट्स के खिलाफ वर्तमान एक्सट्रीम्स का परीक्षण
+        e1, e2, e3 := val-minS, val-maxS, val
+        e4, e5 := val+minS, val+maxS
+        ans = max(ans, max(e1, max(e2, max(e3, max(e4, e5)))))
+        
+        // नई प्रीफिक्स बाउंड्रीज़ जनरेट करें
+        s1, s2, s3 := val, minS+val, 2*minS+val
+        s4, s5 := maxS+val, 2*maxS+val
+        minS = min(s1, min(s2, min(s3, min(s4, s5))))
+        maxS = max(s1, max(s2, max(s3, max(s4, s5))))
+    }
+    return ans
+}
+```
+
+**टू पॉइंटर्स (Two Pointers) &mdash; सिमेट्रिक क्रॉस-मैचिंग:**
+-   **फॉर्मूला:** सिमेट्रिक इंडेक्स वैलिडेशन `p[left] == right && p[right] == left` के ज़रिए मिसप्लेस्ड पर्म्यूटेशन बाउंड्रीज़ को रिज़ॉल्व करता है।
+```go
+// इनवर्ड (inward) पॉइंटर्स के ज़रिए सिंगल-ऑपरेशन ऐरे रिवर्सल को वैलिडेट करना; O(N) टाइम, O(1) स्पेस
+func isValidReversal(p []int) bool {
+    left, right := 1, len(p)-1 // बाउंड्स के अंदर 1-बेस्ड लॉजिक मानते हुए
+    for left < right {
+        for left < right && p[left] == left { left++ }
+        for left < right && p[right] == right { right-- }
+        if left >= right { return true }
+        
+        // सुनिश्चित करें कि बाउंड्री एलिमेंट्स स्ट्रिक्टली क्रॉस-मैच करते हैं
+        if p[left] != right || p[right] != left {
+            return false
+        }
+        left++
+        right--
+    }
+    return true
+}
+```
+
+**गणित (Math): मॉड्यूलो अरिथमेटिक और स्टेट रिडक्शन:**
 -   **फॉर्मूला:** `(y + i) % (x + i) ≡ (y - x) % (x + i)` (O(1) स्पेस कन्वर्जेंस के लिए ब्लॉक एक्यूमुलेशन का उपयोग करके)।
 ```go
 // अर्ली टर्मिनेशन बाउंड्स के साथ मॉड्यूलो अरिथमेटिक; O(1) ऑक्ज़ीलियरी स्पेस
